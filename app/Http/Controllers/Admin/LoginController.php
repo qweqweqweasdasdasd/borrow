@@ -69,14 +69,4 @@ class LoginController extends Controller
         return redirect()->route('login');
     }
 
-    /**
-     *	获取到session_id
-     */
-    public function get()
-    {
-    	$keys = Redis::keys('*');
-    	$data = Redis::get('_cache:HGFwtlwXWqNcq11IJxa6vMIbIcW60UiKV60nWDw3');
-    	dump(json_decode( json_encode($data) ));
-    	dump($keys);
-    }
 }

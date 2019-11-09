@@ -34,12 +34,32 @@ class FanQiang
     {
         $this->request = $request;
         $this->manager = Auth::guard('admin')->user();
+
         $this->sso();
+        $this->checkManagerHasPermission();
+       
+        return $next($request);
+    }
+
+    /**
+     *  检查当前管理员是否有权限
+     */
+    public function checkManagerHasPermission()
+    {
         // 非超级管理员
         if(!$this->manager->isRoot()){
-
+            // 获取管理员权限列表
+            $hasPermissionList = json_decode($this->manager->hasPermissionList(),true);
+            
+            $nowCA = strtolower(getCurrentControllerName().'-'.getCurrentMethodName());
+            // 判断当前控制器和方法是否在权限列表内
+            // dump($nowCA);
+            // dump($hasPermissionList);
+            if(!in_array($nowCA, $hasPermissionList)){
+                exit('无权限!');
+            }
         };
-        return $next($request);
+        return true;
     }
 
     /**

@@ -72,5 +72,12 @@ class ApiErrDesc
 	 *	借款管理
 	 */
 	const BORROWAPPLY_DELETE_FAIL = ['5000','借款列表删除失败!'];
+
+	/**
+	 *	令牌管理
+	 */
+	const TOKEN_RESOURCE_EMPTY = ['6000','令牌不得为空!'];
+
+	const TOKEN_SAVE_FAIL = ['6001','令牌保存失败!'];
 	
 }

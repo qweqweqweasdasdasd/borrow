@@ -80,3 +80,31 @@ function GetTree($array,$pid=0,$level=0)
    }
    return $list;
 }
+
+/**
+ * 获取当前控制器名
+ */
+function getCurrentControllerName()
+{
+    return getCurrentAction()['controller'];
+}
+/**
+ * 获取当前方法名
+ */
+function getCurrentMethodName()
+{
+    return getCurrentAction()['method'];
+}
+/**
+ * 获取当前控制器与操作方法的通用函数
+ */
+function getCurrentAction()
+{
+    $action = \Route::current()->getActionName();
+    //dd($action);exit;
+    //dd($action);
+    list($class, $method) = explode('@', $action);
+    //$classes = explode(DIRECTORY_SEPARATOR,$class);
+    $class = str_replace('Controller','',substr(strrchr($class,'\\'),1));
+    return ['controller' => $class, 'method' => $method];
+}

@@ -81,6 +81,19 @@
             </li>
              <li>
                 <a href="javascript:;">
+                    <i class="layui-icon" lay-tips="令牌管理">&#xe631;</i>
+                    <cite>令牌管理</cite>
+                    <i class="iconfont nav_right">&#xe697;</i></a>
+                <ul class="sub-menu">
+                    <li>
+                        <a onclick="xadmin.add_tab('重置令牌','/admin/platform/token')">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>重置令牌</cite></a>
+                    </li>
+                </ul>
+            </li>
+             <li>
+                <a href="javascript:;">
                     <i class="layui-icon" lay-tips="借呗管理">&#xe659;</i>
                     <cite>借呗管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i></a>

@@ -2,55 +2,81 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\ErrDesc\ApiErrDesc;
+use App\Response\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\BorrowBillRepository;
-use App\Repositories\BorrowApplyRepository;
+use App\Lib\Borrow\KKbet;
 
 class BorrowController extends Controller
 {
- 	/**
- 	 *	借款仓库
- 	 */
- 	protected $borrowApply;
-
- 	/**
- 	 *	借款详情账单仓库
- 	 */
- 	protected $borrowBill;
-
-	/**
-	 *	初始化仓库
-	 */
-	public function __construct(BorrowApplyRepository $borrowApply,BorrowBillRepository $borrowBill)
-	{
-		$this->borrowApply = $borrowApply;
-		$this->borrowBill = $borrowBill;
-	}
-	
     /**
-     *	用户申请借款动作
-     *	post
-     *	会员账号 || 会员姓名 || 可借额度 || 借款金额 || 还款日期 || 验证码  
+     *	获取到用户信息
      */
-    public function borrow(Request $request)
+    public function getUserInfo()
     {
-    	dd($request->all());
-    	// 查询数据库会员合法性
+    	$data = [
+    		'username' => 'akai999'
+    	];
+    	try {
+    		$user = (new KKbet)->getUserInfo($data);
+    	} catch (\Exception $e) {
+    		return $e->getMessage();
+    	}
 
-    	// 查询数据库会员符合要求
-
-    	// 入库
-    	
-    	// 进入队列
-    	dd($request->all());
+    	dump($user);
     }
 
     /**
-     *	入库--借款表||借款明细表
+     *	添加分数
      */
-    public function createdBorrowApplyBill()
+    public function addPoint()
+    {
+    	$data = [
+    		'balance' => 1,
+    		'username' => 'akai999',
+    	];
+
+    	try {
+    		$res = (new KKbet)->addPoint($data);
+    	} catch (\Exception $e) {
+    		return $e->getMessage();
+    	}
+
+    	dump($res);
+    }
+
+    /**
+     *	扣除分数
+     */
+    public function subtractPoint()
+    {
+    	$data = [
+    		'balance' => 1,
+    		'username' => 'akai999',
+    	];
+
+    	try {
+    		$res = (new KKbet)->subtractPoint($data);
+    	} catch (\Exception $e) {
+    		return $e->getMessage();
+    	}
+
+    	dump($res);
+    }
+
+    /**
+     *	心跳包
+     */
+    public function heartbeat()
     {
     	
+    	$res = (new KKbet)->heartbeat();
+    	if($res){
+           return JsonResponse::ResponseSuccess(['status'=>$res]);
+        }
+	    return JsonResponse::ResponseSuccess(['status'=>$res]);
+
     }
+
 }
