@@ -2,27 +2,21 @@
 
 namespace App;
 
-use Tymon\JWTAuth\Contracts\JWTSubject;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class Member extends Authenticatable implements JWTSubject
+class Member extends Model
 {
-	use Notifiable;
-
     protected $primaryKey = 'm_id';
 	protected $table = 'member';
     protected $fillable = [
-    	'm_name','password'
+    	'userAccount','password','telephone','vipName','userName','userId'
     ];
 
-    public function getJWTIdentifier()
+    /**
+     *	批量插入数据库
+     */
+    public function WriteMysql($data)
     {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [];
+    	return \DB::insert(" INSERT INTO {$this->table} (`userAccount`,`telephone`,`vipName`,`userName`,`userId`) VALUES {$data}");
     }
 }

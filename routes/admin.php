@@ -17,9 +17,12 @@ Route::group(['middleware'=>['auth:admin','FanQiang']],function(){
 	Route::resource('permission','Admin\PermissionController');									// 后台管理--权限管理
 	Route::match(['get','post'],'role/allocation/{role}','Admin\RoleController@allocation');	// 后台管理--权限分配
 
-	Route::match(['get','post'],'platform/token','Admin\TokenController@token');					// 后台管理--设置平台auth
+	Route::match(['get','post'],'platform/token','Admin\TokenController@token');				// 后台管理--设置平台auth
+
+	Route::resource('member','Admin\MemberController');					// 后台管理--会员管理
 
 	Route::resource('borrowapply','Admin\BorrowApplyController');		// 后台管理--借款管理
 	
+	Route::post('upload','Admin\UploadController@upload');				// 后台管理--上传 excel || 
 });
 

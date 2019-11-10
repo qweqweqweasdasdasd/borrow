@@ -59,7 +59,7 @@ class KKbet
 		$opt = [
 			'headers' =>[
 				'timeout' => 5,
-				'Authorization' => '465f7565-0a59-4582-be4f-0a86ffacc3f9'
+				'Authorization' => $this->token
 			]
 		];
 
@@ -191,7 +191,7 @@ class KKbet
 
 		// 会话过期	status == 401
 		if($content['status'] == 401){
-			throw false;	
+			return false;	
 		}
 	}
 }

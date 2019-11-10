@@ -45,7 +45,7 @@
          _ajax();
          setInterval(function(){
             _ajax();
-         },60000)
+         },600000)
 
          function _ajax(){
           $.ajax({
@@ -64,7 +64,8 @@
                       $('#status').attr('checked',true);
                       form.render();
                     }
-                    if(res.status == false){
+                    if(res.data.status == false){
+
                       $('#status').attr('title','会话失效');
                       $('#status').attr('checked',false);
                       form.render();
