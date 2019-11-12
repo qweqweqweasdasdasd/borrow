@@ -33,9 +33,22 @@ class MemberRepository extends BaseRepository
     /** 
      *  获取用户信息
      */
-    public function Members()
+    public function Members($d)
     {
-        
+        $list = $this->member::orderBy('m_id','desc');
+        // 查询会员账号
+        if(!empty($d['userAccount'])){
+            $list->where('userAccount',$d['userAccount']);
+        }
+        // 查询真实姓名
+        if(!empty($d['userName'])){
+            $list->where('userName',$d['userName']);
+        }
+        // 查询手机号
+        if(!empty($d['telephone'])){
+            $list->where('telephone',$d['telephone']);
+        }
+        return $list->paginate(9);
     }
 
     /**

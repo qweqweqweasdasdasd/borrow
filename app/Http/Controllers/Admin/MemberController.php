@@ -26,11 +26,21 @@ class MemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     { 
+        $whereData = [
+            'userAccount' => !empty($request->get('userAccount'))?$request->get('userAccount'):'',
+            'userName' => !empty($request->get('userName'))?$request->get('userName'):'',
+            'telephone' => !empty($request->get('telephone'))?$request->get('telephone'):'',
+        ];
         $pathinfo = $this->member->CommonPathInfo();
-        //dump($pathinfo);
-        return view('admin.member.index',compact('pathinfo'));
+        $members = $this->member->members($whereData);
+        
+        foreach ($members as $k => $v) {
+            $v->telephone = substr_replace($v->telephone,'****',3,4);
+        }
+        //dump($members);
+        return view('admin.member.index',compact('pathinfo','members','whereData'));
     }
 
     /**

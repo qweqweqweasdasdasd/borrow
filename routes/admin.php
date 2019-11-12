@@ -21,6 +21,8 @@ Route::group(['middleware'=>['auth:admin','FanQiang']],function(){
 
 	Route::resource('member','Admin\MemberController');					// 后台管理--会员管理
 
+	Route::resource('vip','Admin\VipController');						// 后台管理--vip等级管理
+
 	Route::resource('borrowapply','Admin\BorrowApplyController');		// 后台管理--借款管理
 	
 	Route::post('upload','Admin\UploadController@upload');				// 后台管理--上传 excel || 

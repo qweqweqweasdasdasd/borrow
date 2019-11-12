@@ -79,5 +79,13 @@ class ApiErrDesc
 	const TOKEN_RESOURCE_EMPTY = ['6000','令牌不得为空!'];
 
 	const TOKEN_SAVE_FAIL = ['6001','令牌保存失败!'];
+
+	/**
+	 *	VIP 管理
+	 */
+	const VIP_SAVE_FAIL = ['7000','vip添加失败!'];
+
+	const VIP_UPDATE_STATUS_FAIL = ['7000','vip状态修改失败!'];
+	
 	
 }

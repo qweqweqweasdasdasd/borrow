@@ -19,74 +19,64 @@
                             <form class="layui-form layui-col-space5">
 	                        	
                              	<div class="layui-input-inline layui-show-xs-block">
-                                    <input type="text" name="userAccount" placeholder="请输入会员账号" autocomplete="off" class="layui-input" style="width:200px">
+                                    <input type="text" name="userAccount" placeholder="请输入会员账号" autocomplete="off" class="layui-input" style="width:200px" value="{{$whereData['userAccount']}}">
                                 </div>
                                 <div class="layui-input-inline layui-show-xs-block">
-                                    <input type="text" name="userName" placeholder="请输入真实姓名" autocomplete="off" class="layui-input" style="width:200px">
+                                    <input type="text" name="userName" placeholder="请输入真实姓名" autocomplete="off" class="layui-input" style="width:200px" value="{{$whereData['userName']}}">
                                 </div>
                                 <div class="layui-input-inline layui-show-xs-block">
-                                    <input type="text" name="userId" placeholder="请输入平台id" autocomplete="off" class="layui-input" style="width:200px">
+                                    <input type="text" name="telephone" placeholder="请输入手机号码" autocomplete="off" class="layui-input" style="width:200px" value="{{$whereData['telephone']}}">
                                 </div>
                                 <div class="layui-inline layui-show-xs-block">
                                     <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
                                 </div>
                             </form>
                         </div>
-                        <div class="layui-card-header"> 
+                       <!--  <div class="layui-card-header"> 
                             <button type="button" class="layui-btn" id="test1">
               							  <i class="layui-icon">&#xe67c;</i>上传csv表格
               							</button>
-                        </div>
+                        </div> -->
                         <div class="layui-card-body ">
                             <table class="layui-table layui-form">
                               <thead>
                                  
                                 <tr>
                                   <th>ID</th>
-                                  <th>登录名</th>
-                                  <th>手机</th>
-                                  <th>邮箱</th>
-                                  <th>角色</th>
-                                  <th>加入时间</th>
-                                  <th>状态</th>
+                                  <th>用户昵称</th>
+                                  <th>真实姓名</th>
+                                  <th>手机号码</th>
+                                  <th>平台id</th>
+                                  <th>VIP等级</th>
+                                  <th>更新vip时间</th>
                                   <th>操作</th>
                               </thead>
                               <tbody>
-                                 
+                                @foreach($members as $v)
                                 <tr>
-                                  <td>1</td>
-                                  <td>admin</td>
-                                  <td>18925139194</td>
-                                  <td>113664000@qq.com</td>
-                                  <td>超级管理员</td>
-                                  <td>2017-01-01 11:11:42</td>
+                                  <td>{{$v->m_id}}</td>
+                                  <td>{{$v->userAccount}}</td>
+                                  <td>{{$v->userName}}</td>
+                                  <td>{{$v->telephone}}</td>
+                                  <td>{{$v->userId}}</td>
+                                  <td>{{$v->vip_id}}</td>
                                   <td class="td-status">
-                                    <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span></td>
+                                   {{$v->update_vip_time}}
+                                  </td>
                                   <td class="td-manage">
-                                    <a onclick="member_stop(this,'10001')" href="javascript:;"  title="启用">
-                                      <i class="layui-icon">&#xe601;</i>
-                                    </a>
-                                    <a title="编辑"  onclick="xadmin.open('编辑','admin-edit.html')" href="javascript:;">
-                                      <i class="layui-icon">&#xe642;</i>
-                                    </a>
-                                    <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-                                      <i class="layui-icon">&#xe640;</i>
+   
+                                    <a title="手动更新" onclick="member_del(this,'要删除的id')" href="javascript:;">
+                                      <i class="layui-icon">&#xe9aa;</i>
                                     </a>
                                   </td>
                                 </tr>
+                                @endforeach
                               </tbody>
                             </table>
                         </div>
                         <div class="layui-card-body ">
                             <div class="page">
-                                <div>
-                                  <a class="prev" href="">&lt;&lt;</a>
-                                  <a class="num" href="">1</a>
-                                  <span class="current">2</span>
-                                  <a class="num" href="">3</a>
-                                  <a class="num" href="">489</a>
-                                  <a class="next" href="">&gt;&gt;</a>
-                                </div>
+                                {{ $members->appends($whereData)->links() }}
                             </div>
                         </div>
                     </div>
