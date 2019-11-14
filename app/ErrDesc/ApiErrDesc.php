@@ -86,6 +86,15 @@ class ApiErrDesc
 	const VIP_SAVE_FAIL = ['7000','vip添加失败!'];
 
 	const VIP_UPDATE_STATUS_FAIL = ['7000','vip状态修改失败!'];
+
+	const VIP_UPDATE_FAIL = ['7001','vip信息更新失败!'];
+
+	const VIP_DELETED_FAIL = ['7002','vip信息删除失败!'];
+
+	/**
+	 *	用户管理
+	 */
+	const MEMBER_UPDATE_FAIL = ['8000','用户更新姓名失败!'];
 	
 	
 }

@@ -69,15 +69,17 @@ class KKbet
 
 		// 用户不存在 status == 1 && result == null
 		if($content['status'] == 1 && !count($content['data']['result'])){
-			throw new \Exception("平台查询没有 {$d['username']}");
+			//throw new \Exception("平台查询没有 {$d['username']}");
+			return ['code'=>100,'msg'=>"平台查询没有 {$d['username']}"];
 		}
 		// 用户存在,返回用户资料 status == 1 && result != null
 		if($content['status'] == 1 && count($content['data']['result'])){
-			return ($content['data']['result'][0]);
+			return ['code'=>200,'msg'=>'success','data'=>($content['data']['result'][0])];
 		}
 		// 会话过期	status == 401
 		if($content['status'] == 401){
-			throw new \Exception("会话过期!");	
+			//throw new \Exception("会话过期!");	
+			return ['code'=>101,'msg'=>'系统令牌过期,请联系客服处理!'];	
 		}
 	}
 
@@ -181,7 +183,7 @@ class KKbet
 		];
 
 		$response = $this->ql->get($this->domain.'/adminsystem/server/memberManager/findByMemberField',$data,$opt);
-
+		//dump($response);
 		$content = json_decode($response->getHtml(),true);
 
 		// 会话过期	status == 1

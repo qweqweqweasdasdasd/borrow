@@ -71,6 +71,7 @@ class BorrowController extends Controller
     public function heartbeat()
     {
     	$res = (new KKbet)->heartbeat();
+
     	if($res){
            return JsonResponse::ResponseSuccess(['status'=>$res]);
         }

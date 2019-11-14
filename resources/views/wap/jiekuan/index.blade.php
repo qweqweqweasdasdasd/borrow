@@ -91,8 +91,15 @@
             		'X-CSRF-TOKEN':"{{csrf_token()}}"
             	},
 				success: function(res) {
-					console.log(res)
-					layer.msg(res.msg);
+					if(res.code == '1'){
+            			layer.msg(res.data.msg);
+            		}
+	                if(res.code == '422'){
+	                    layer.msg(res.msg)
+	                }
+	                if(res.code == '0'){
+	                    layer.msg(res.msg)
+	                }
 					
 				},
 				error: function(res) {
@@ -102,9 +109,9 @@
 		})
 	})
 	laydate({
-		elem: '#days-2',
+		elem: '#hk_time',
 		min: laydate.now(+1), //-1代表昨天，-2代表前天，以此类推
-		max: laydate.now(+30),
+		max: laydate.now(+60),
 	});
 </script>
 @endsection

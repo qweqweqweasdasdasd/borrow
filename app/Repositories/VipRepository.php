@@ -33,9 +33,20 @@ class VipRepository extends BaseRepository
     /**
      *	vip获取所有数据
      */
-    public function vips()
+    public function vips($d)
     {
-    	$list = $this->vip::orderBy('vip_id','desc');
+    	$list = $this->vip::with('member')
+            ->orderBy('vip_id','desc');
+
+        // 根据关键字
+        if(!empty($d['vipName'])){
+            $list->where('vipName',strtolower($d['vipName']));
+        }
+        
+        // 根据时间查询
+        if(!empty($d['start']) && !empty($d['end'])){
+            $list->whereBetween('created_at',[$d['start'],$d['end']] );
+        }
 
     	return $list->paginate(9);
     }

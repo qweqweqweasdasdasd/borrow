@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\Member;
+use App\Vip;
 
 class MemberRepository extends BaseRepository
 {
@@ -30,12 +31,66 @@ class MemberRepository extends BaseRepository
         parent::__construct();
     }
 
+    /**
+     *  保存数据
+     */
+    public function store($data,$balanced)
+    {
+        $data = [
+            'userAccount' => $data['userAccount'],
+            'userName' => !empty($data['userName'])?$data['userName']:'',
+            'telephone' => $data['telephone'],
+            'userId' => $data['userId'],
+            'vip_id' => $this->transformToVipId($data['vipName']),
+            'update_vip_time' => date('Y-m-d H:i:s',time()),
+            'balanced' => $balanced,
+        ];
+
+        return $this->member::create($data);
+    }
+
+    /**
+     *  vip等级转换为id
+     */
+    public function transformToVipId($vipName)
+    {
+        $vips = Vip::get(['vip_id','vipName']);
+        foreach ($vips as $k => $v) {
+            if($v->vipName == strtolower($vipName)){
+                return $v->vip_id;
+            }
+        }
+    }
+
+    /**
+     *  通过id获取到vipName
+     */
+    public function transformToVipName($vip_id)
+    {
+        $vips = Vip::get(['vip_id','vipName']);
+        foreach ($vips as $k => $v) {
+            if($v->vip_id == $vip_id){
+                return strtolower($v->vipName);
+            }
+        }
+    }
+    /**
+     *  获取到指定的数据
+     */
+    public function getOneWithVipBy($userAccount)
+    {
+        return $this->member::with('vip')->where('userAccount',$userAccount)->first();
+    }
+
     /** 
      *  获取用户信息
      */
     public function Members($d)
     {
-        $list = $this->member::orderBy('m_id','desc');
+        $list = $this->member::with(['vip'=>function($query){
+                $query->select('vip_id','vipName');
+            }])
+            ->orderBy('m_id','desc');
         // 查询会员账号
         if(!empty($d['userAccount'])){
             $list->where('userAccount',$d['userAccount']);

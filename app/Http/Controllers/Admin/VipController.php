@@ -29,15 +29,21 @@ class VipController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $whereData = [
+            'vipName' => $request->get('vipName') ? trim($request->get('vipName')) :'',
+            'start' => $request->get('start') ? trim($request->get('start')) :'',
+            'end' => $request->get('end') ? trim($request->get('end')) :'',
+        ];
+
         $pathinfo = $this->vip->CommonPathInfo();
-        $vips = $this->vip->vips();
+        $vips = $this->vip->vips($whereData);
         foreach ($vips as $k => $v) {
             $v->borrow_balance = number_format($v->borrow_balance);
         }
-        //dump($pathinfo);
-        return view('admin.vip.index',compact('pathinfo','vips'));
+        //dump($vips);
+        return view('admin.vip.index',compact('pathinfo','vips','whereData'));
     }
 
     /**
@@ -92,7 +98,9 @@ class VipController extends Controller
      */
     public function edit($id)
     {
-        //
+        $vip = $this->vip->GetOne($id);
+        //dump($vip);
+        return view('admin.vip.edit',compact('vip'));
     }
 
     /**
@@ -104,7 +112,18 @@ class VipController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $id = $request->get('vip_id');
+
+        $data = [
+            'vipName' => $request->get('vipName'),
+            'borrow_balance' => $request->get('borrow_balance'),
+            'vip_status' => $request->get('vip_status'),
+        ];
+        if(!$this->vip->CommonUpdate($id,$data)){
+            return JsonResponse::JsonData(ApiErrDesc::VIP_UPDATE_FAIL[0],ApiErrDesc::VIP_UPDATE_FAIL[1]);
+        };
+        return JsonResponse::ResponseSuccess();
+        
     }
 
     /**
@@ -115,6 +134,9 @@ class VipController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(!$this->vip->CommonDelete($id)){
+             return JsonResponse::JsonData(ApiErrDesc::VIP_DELETED_FAIL[0],ApiErrDesc::VIP_DELETED_FAIL[1]);
+        };
+        return JsonResponse::ResponseSuccess();
     }
 }

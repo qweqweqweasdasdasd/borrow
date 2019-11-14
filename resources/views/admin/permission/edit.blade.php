@@ -109,7 +109,7 @@
             	},
             	success:function(res){
             		if(res.code == '1'){
-            			layer.alert("添加成功",{icon:6},function(){
+            			layer.alert("更新成功",{icon:6},function(){
             				//关闭当前frame
 			                xadmin.close();
 			                // 可以对父窗口进行刷新 

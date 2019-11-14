@@ -15,6 +15,34 @@
                     </li>
                 </ul>
             </li>
+             <li>
+                <a href="javascript:;">
+                    <i class="layui-icon" lay-tips="借呗管理">&#xe659;</i>
+                    <cite>借呗管理</cite>
+                    <i class="iconfont nav_right">&#xe697;</i></a>
+                <ul class="sub-menu">
+                    <li>
+                        <a onclick="xadmin.add_tab('借款总览','/admin/pandect')">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>借款总览</cite></a>
+                    </li>
+                    <li>
+                        <a onclick="xadmin.add_tab('详情账单','/admin/bill')">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>详情账单</cite></a>
+                    </li>
+                    <li>
+                        <a onclick="xadmin.add_tab('还款列表','order-list1.html')">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>还款列表</cite></a>
+                    </li>
+                   <!--  <li>
+                        <a onclick="xadmin.add_tab('逾期未还','order-list1.html')">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>逾期未还</cite></a>
+                    </li> -->
+                </ul>
+            </li>
             <li>
                 <a href="javascript:;">
                     <i class="iconfont left-nav-li" lay-tips="VIP管理">&#xe735;</i>
@@ -54,34 +82,7 @@
                     </li>
                 </ul>
             </li>
-             <li>
-                <a href="javascript:;">
-                    <i class="layui-icon" lay-tips="借呗管理">&#xe659;</i>
-                    <cite>借呗管理</cite>
-                    <i class="iconfont nav_right">&#xe697;</i></a>
-                <ul class="sub-menu">
-                    <li>
-                        <a onclick="xadmin.add_tab('借款列表','/admin/borrowapply')">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>借款列表</cite></a>
-                    </li>
-                    <li>
-                        <a onclick="xadmin.add_tab('借款申请','order-list1.html')">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>借款申请</cite></a>
-                    </li>
-                    <li>
-                        <a onclick="xadmin.add_tab('还款申请','order-list1.html')">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>还款申请</cite></a>
-                    </li>
-                    <li>
-                        <a onclick="xadmin.add_tab('逾期未还','order-list1.html')">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>逾期未还</cite></a>
-                    </li>
-                </ul>
-            </li>
+            
             <li>
                 <a href="javascript:;">
                     <i class="iconfont left-nav-li" lay-tips="RBAC">&#xe726;</i>

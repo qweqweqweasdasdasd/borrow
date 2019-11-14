@@ -48,6 +48,7 @@
                                   <th>手机号码</th>
                                   <th>平台id</th>
                                   <th>VIP等级</th>
+                                  <th>已借金额</th>
                                   <th>更新vip时间</th>
                                   <th>操作</th>
                               </thead>
@@ -59,12 +60,16 @@
                                   <td>{{$v->userName}}</td>
                                   <td>{{$v->telephone}}</td>
                                   <td>{{$v->userId}}</td>
-                                  <td>{{$v->vip_id}}</td>
+                                  <td>{{$v->vip->vipName}}</td>
+                                  <td>{{$v->balanced}}</td>
                                   <td class="td-status">
                                    {{$v->update_vip_time}}
                                   </td>
                                   <td class="td-manage">
    
+                                    <a title="编辑"  onclick="xadmin.open('编辑','/admin/member/{{$v->m_id}}/edit',600,800,true)" href="javascript:;">
+                                        <i class="layui-icon">&#xe642;</i>
+                                    </a>
                                     <a title="手动更新" onclick="member_del(this,'要删除的id')" href="javascript:;">
                                       <i class="layui-icon">&#xe9aa;</i>
                                     </a>

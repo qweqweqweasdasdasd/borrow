@@ -14,6 +14,11 @@ return  [
 			'expire' => 3600,
 			'tokenSave' => 'tokenSave-',
 		],
+		'jiekuan' => [
+			'pre' => 'jiekuan:',
+			'userAccountNotInPlatform' => 'userAccountNotInPlatform-set',
+			'addAccountToApplyStatusList' => 'addAccountToApplyStatusList-zset',
+		],
 
 	]
 ];

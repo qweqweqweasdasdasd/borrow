@@ -2,48 +2,42 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\ErrDesc\ApiErrDesc;
-use App\Response\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\MemberRepository;
+use App\Repositories\BillRepository;
 
-class MemberController extends Controller
+class BillController extends Controller
 {
     /**
-     *  角色仓库
+     *  账单仓库
      */
-    protected $member;
+    protected $bill;
 
     /**
-     * 初始化仓库
+     *  实例化仓库 
      */
-    public function __construct(MemberRepository $member)
+    public function __construct(BillRepository $bill)
     {
-        $this->member = $member;
+        $this->bill = $bill;
     }
-
+    
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    { 
+    {
         $whereData = [
-            'userAccount' => !empty($request->get('userAccount'))?$request->get('userAccount'):'',
-            'userName' => !empty($request->get('userName'))?$request->get('userName'):'',
-            'telephone' => !empty($request->get('telephone'))?$request->get('telephone'):'',
+            'userAccount' => !empty($request->get('userAccount'))?trim($request->get('userAccount')):'',
+            'borrow_start' => !empty($request->get('borrow_start'))?trim($request->get('borrow_start')):'',
+            'borrow_end' => !empty($request->get('borrow_end'))?trim($request->get('borrow_end')):'',
+            'status' => !empty($request->get('status'))?trim($request->get('status')):'',
         ];
-        $pathinfo = $this->member->CommonPathInfo();
-        $members = $this->member->members($whereData);
-        //dd($members);
-        foreach ($members as $k => $v) {
-            $v->telephone = substr_replace($v->telephone,'****',3,4);
-            $v->balanced = number_format($v->balanced);
-        }
-        //dump($members);
-        return view('admin.member.index',compact('pathinfo','members','whereData'));
+        $pathinfo = $this->bill->CommonPathInfo();
+        $bills = $this->bill->bills($whereData);
+        //dump($whereData);
+        return view('admin.bill.index',compact('pathinfo','bills','whereData'));
     }
 
     /**
@@ -86,9 +80,7 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
-        $member = $this->member->GetOne($id);
-
-        return view('admin.member.edit',compact('member'));
+        //
     }
 
     /**
@@ -100,14 +92,7 @@ class MemberController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $id = $request->get('m_id');
-        $data = [
-            'userName' => $request->get('userName'),
-        ];
-        if(!$this->member->CommonUpdate($id,$data)){
-            return JsonResponse::JsonData(ApiErrDesc::MEMBER_UPDATE_FAIL[0],ApiErrDesc::MEMBER_UPDATE_FAIL[1]);
-        };
-        return JsonResponse::ResponseSuccess();
+        //
     }
 
     /**

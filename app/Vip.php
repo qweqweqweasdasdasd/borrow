@@ -18,6 +18,6 @@ class Vip extends Model
      */
     public function member()
     {
-        return $this->hasOne('App\Member','vip_id','vip_id')->withTimestamps();
+        return $this->hasMany('App\Member','vip_id','vip_id');
     }
 }

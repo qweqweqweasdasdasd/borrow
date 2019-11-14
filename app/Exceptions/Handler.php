@@ -52,7 +52,7 @@ class Handler extends ExceptionHandler
         /**
          *  admin 路由
          */ 
-        if($request->is('admin/*')){
+        //if($request->is('admin/*')){
             if($exception instanceof ValidationException){
                 $result = [
                     "code" => ApiErrDesc::FORM_ERR[0],
@@ -62,7 +62,7 @@ class Handler extends ExceptionHandler
                 //return JsonResponse::JsonData($result['code'],$result['msg']);
                 return response()->json($result);
             }
-        }
+        //}
         return parent::render($request, $exception);
     }
 }

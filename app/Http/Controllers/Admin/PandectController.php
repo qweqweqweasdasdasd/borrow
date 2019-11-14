@@ -2,25 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\ErrDesc\ApiErrDesc;
-use App\Response\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\BorrowApplyRepository;
+use App\Repositories\PandectRepository;
 
-class BorrowApplyController extends Controller
+class PandectController extends Controller
 {
     /**
-     *  借款列表仓库
+     *  账单仓库
      */
-    protected $borrowApply;
+    protected $pandect;
 
     /**
-     * 初始化仓库
+     *  实例化仓库 
      */
-    public function __construct(BorrowApplyRepository $borrowApply)
+    public function __construct(PandectRepository $pandect)
     {
-        $this->borrowApply = $borrowApply;
+        $this->pandect = $pandect;
     }
 
     /**
@@ -31,27 +29,17 @@ class BorrowApplyController extends Controller
     public function index(Request $request)
     {
         $whereData = $this->requestInit($request->all());
-        $pathinfo = $this->borrowApply->CommonPathInfo();
-        $borrowApply = $this->borrowApply->borrowApplys($whereData);
 
-        foreach ($borrowApply as $k => $v) {
-            $v->me_limit = $v->me_limit ? number_format($v->me_limit) :'';
-            $v->borrow_total_money = $v->borrow_total_money ? number_format($v->borrow_total_money) :'';
-            $v->repayment_total_money = $v->repayment_total_money ? number_format($v->repayment_total_money) :'';
-            $v->arrearage = $v->arrearage ? '-'. $v->arrearage :'';
-        }
-        //dump($whereData);
-        return view('admin.borrow.index',compact('pathinfo','borrowApply','whereData'));
+        $pathinfo = $this->pandect->CommonPathInfo();
+        $pandects = $this->pandect->pandects($whereData);
+
+        //dump($pandects);
+        return view('admin.pandect.index',compact('pathinfo','pandects','whereData'));
     }
 
-
-    /**
-     *
-     */
     public function requestInit($d)
-    {
-
-        if(!empty($d['apply_time'])){
+    {   
+       if(!empty($d['apply_time'])){
             list($apply_start,$apply_end) = explode('~', $d['apply_time']);
             $whereData['apply_start'] = $apply_start;
             $whereData['apply_end'] = $apply_end;
@@ -68,9 +56,8 @@ class BorrowApplyController extends Controller
         }else{
             $whereData['repayment_time'] = '';
         }
-
-        $whereData['nickname'] = !empty($d['nickname']) ? trim($d['nickname']) : '';
-        $whereData['u_name'] = !empty($d['u_name']) ? trim($d['u_name']) : '';
+        
+        $whereData['userAccount'] = !empty($d['userAccount']) ? trim($d['userAccount']) : '';
         $whereData['borrow_start'] = !empty($d['borrow_start']) ? trim($d['borrow_start']) : '';
         $whereData['borrow_end'] = !empty($d['borrow_end']) ? trim($d['borrow_end']) : '';
         $whereData['repayment_start'] = !empty($d['repayment_start']) ? trim($d['repayment_start']) : '';
@@ -78,8 +65,6 @@ class BorrowApplyController extends Controller
 
         return $whereData;
     }
-
-
     /**
      * Show the form for creating a new resource.
      *
@@ -120,7 +105,7 @@ class BorrowApplyController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -132,7 +117,7 @@ class BorrowApplyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request->all());
     }
 
     /**
@@ -143,10 +128,6 @@ class BorrowApplyController extends Controller
      */
     public function destroy($id)
     {
-        // 删除借款列表 和 借款账单??
-        if(!$this->borrowApply->CommonDelete($id)){
-            return JsonResponse::JsonData(ApiErrDesc::BORROWAPPLY_DELETE_FAIL[0],ApiErrDesc::BORROWAPPLY_DELETE_FAIL[1]);
-        } 
-        return JsonResponse::ResponseSuccess();
+        //
     }
 }

@@ -18,13 +18,13 @@
                         <div class="layui-card-body ">
                             <form class="layui-form layui-col-space5">
                                 <div class="layui-inline layui-show-xs-block">
-                                    <input class="layui-input"  autocomplete="off" placeholder="开始日" name="start" id="start">
+                                    <input class="layui-input"  autocomplete="off" placeholder="开始日" name="start" id="start" value="{{$whereData['start']}}">
                                 </div>
                                 <div class="layui-inline layui-show-xs-block">
-                                    <input class="layui-input"  autocomplete="off" placeholder="截止日" name="end" id="end">
+                                    <input class="layui-input"  autocomplete="off" placeholder="截止日" name="end" id="end" value="{{$whereData['end']}}">
                                 </div>
                                 <div class="layui-inline layui-show-xs-block">
-                                    <input type="text" name="username"  placeholder="请输入VIP名称" autocomplete="off" class="layui-input" style="width: 200px;">
+                                    <input type="text" name="vipName"  placeholder="请输入VIP名称" autocomplete="off" class="layui-input" style="width: 200px;" value="{{$whereData['vipName']}}">
                                 </div>
                                 <div class="layui-inline layui-show-xs-block">
                                     <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
@@ -42,6 +42,7 @@
                                   <th>ID</th>
                                   <th>vip名</th>
                                   <th>可借款金额</th>
+                                  <th>用户数量</th>
                                   <th>状态</th>
                                   <th>操作</th>
                               </thead>
@@ -51,14 +52,15 @@
                                   <td>{{$v->vip_id}}</td>
                                   <td>{{$v->vipName}}</td>
                                   <td>{{$v->borrow_balance}}</td>
+                                  <td>{{$v->member()->count()}}</td>
                                   <td class="td-status">
                                     {!! common_reset_status($v->vip_status) !!}
                                   </td>
                                   <td class="td-manage">
-                                    <a title="编辑"  onclick="xadmin.open('编辑','admin-edit.html')" href="javascript:;">
+                                    <a title="编辑"  onclick="xadmin.open('编辑','/admin/vip/{{$v->vip_id}}/edit',600,800,true)" href="javascript:;">
                                       <i class="layui-icon">&#xe642;</i>
                                     </a>
-                                    <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+                                    <a title="删除" onclick="member_del(this,'{{$v->vip_id}}')" href="javascript:;">
                                       <i class="layui-icon">&#xe640;</i>
                                     </a>
                                   </td>
@@ -125,8 +127,26 @@
   function member_del(obj,id){
       layer.confirm('确认要删除吗？',function(index){
           //发异步删除数据
-          $(obj).parents("tr").remove();
-          layer.msg('已删除!',{icon:1,time:1000});
+          // ajax
+      	$.ajax({
+	        url:'/admin/vip/'+id,
+	        data:'',
+	        dataType:'json',
+	        type:'DELETE',
+	        headers:{
+	          'X-CSRF-TOKEN':"{{csrf_token()}}"
+	        },  
+	        success:function(res){
+	            if(res.code == '1'){
+	                $(obj).parents("tr").remove();
+          			layer.msg('已删除!',{icon:1,time:1000});
+	            }
+	            if(res.code == '1004'){
+	                layer.msg(res.msg,{icon:5})
+	            }
+	        }
+	      })
+         
       });
   }
 

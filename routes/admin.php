@@ -23,7 +23,9 @@ Route::group(['middleware'=>['auth:admin','FanQiang']],function(){
 
 	Route::resource('vip','Admin\VipController');						// 后台管理--vip等级管理
 
-	Route::resource('borrowapply','Admin\BorrowApplyController');		// 后台管理--借款管理
+	Route::resource('pandect','Admin\PandectController');				// 后台管理--总览管理
+
+	Route::resource('bill','Admin\BillController');						// 后台管理--账单管理
 	
 	Route::post('upload','Admin\UploadController@upload');				// 后台管理--上传 excel || 
 });

@@ -26,6 +26,28 @@ function common_show_status($status,$t1,$t2)
 	}
 }
 
+/**
+ *  账单状态
+ *  1,待申请 2,借款成功 3,借款失败 4,待还款 5,还款成功 6,还款失败
+ */
+function bill_show_status($status)
+{
+    switch ($status) {
+        case '1':
+            return '<span class="layui-badge layui-bg-blue">待申请</span>';
+        case '2':
+            return '<span class="layui-badge layui-bg-green">借款成功</span>';
+        case '3':
+            return '<span class="layui-badge">借款失败</span>';
+        case '4':
+            return '<span class="layui-badge layui-bg-blue">待还款</span>';
+        case '5':
+            return '<span class="layui-badge layui-bg-green">还款成功</span>';
+        case '6':
+            return '<span class="layui-badge">还款失败</span>';
+    }
+}
+
 
 /**
  * 递归方式获取上下级权限信息

@@ -5,13 +5,14 @@
     <div class="layui-fluid">
         <div class="layui-row">
             <form class="layui-form">
+            	<input type="hidden" name="vip_id" value="{{$vip->vip_id}}">
               <div class="layui-form-item">
                   <label for="vipName" class="layui-form-label">
                       <span class="x-red">*</span>VIP名称
                   </label>
                   <div class="layui-input-block">
                       <input type="text" id="vipName" name="vipName" required="" 
-                      autocomplete="off" class="layui-input">
+                      autocomplete="off" class="layui-input" value="{{$vip->vipName}}">
                   </div>
               </div>
               <div class="layui-form-item">
@@ -20,7 +21,7 @@
                   </label>
                   <div class="layui-input-block">
                       <input type="text" id="borrow_balance" name="borrow_balance" required="" 
-                      autocomplete="off" class="layui-input">
+                      autocomplete="off" class="layui-input" value="{{$vip->borrow_balance}}">
                   </div>
               </div>
               <div class="layui-form-item">
@@ -28,16 +29,17 @@
       				   		<span class="x-red">*</span>vip状态
       				   </label>
       				   <div class="layui-input-block">
-      				      <input type="radio" name="vip_status" value="1" title="开启" checked>
-      				      <input type="radio" name="vip_status" value="2" title="停用" >
+      				      <input type="radio" name="vip_status" value="1" title="开启" @if($vip->vip_status == 1) checked @endif>
+      				      <input type="radio" name="vip_status" value="2" title="停用" @if($vip->vip_status == 2) checked
+      				      @endif>
       				   </div>
       			  </div>
       			 
               <div class="layui-form-item">
                   <label for="L_repass" class="layui-form-label">
                   </label>
-                  <button  class="layui-btn" lay-filter="add" lay-submit="">
-                      保存
+                  <button  class="layui-btn" lay-filter="update" lay-submit="">
+                      更新
                   </button>
               </div>
           </form>
@@ -56,14 +58,15 @@
             layer = layui.layer;
 
     //监听提交
-    form.on('submit(add)',function(data) {
+    form.on('submit(update)',function(data) {
             //发异步，把数据提交给php
+            var id = $('input[name="vip_id"]').val();
 
             $.ajax({
-            	url:'/admin/vip',
+            	url:'/admin/vip/'+id,
             	data:data.field,
             	dataType:'json',
-            	type:'post',
+            	type:'PATCH',
             	headers:{
             		'X-CSRF-TOKEN':"{{csrf_token()}}"
             	},
@@ -79,7 +82,7 @@
                 if(res.code == '422'){
                     layer.msg(res.msg,{icon:5})
                 }
-                if(res.code == '7000'){
+                if(res.code == '7001'){
                     layer.msg(res.msg,{icon:5})
                 }
             	}
