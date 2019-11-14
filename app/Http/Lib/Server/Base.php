@@ -17,8 +17,16 @@ class Base
 		}
 
 		// 判断vip是否为当日更新数据
-		// ??
-
+		if( date('Y-m-d',strtotime($member->update_vip_time)) != date('Y-m-d',time())){
+			dd('pass');
+			$param = [
+	            'm_id' => $member->m_id,
+	            'userAccount' => $member->userAccount,
+	        ];
+			$response = (new UpdateVipInfo)->GetPlalformParam($param);
+            (new UpdateVipInfo)->UpdateVipToBy($response);
+		}
+		
 		// 核对手机号
 		
 

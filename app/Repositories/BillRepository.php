@@ -60,7 +60,7 @@ class BillRepository extends BaseRepository
             $list->where('status',$d['status']);
         }
 
-        return $list->paginate(3);
+        return $list->paginate(13);
     }
   	
 }

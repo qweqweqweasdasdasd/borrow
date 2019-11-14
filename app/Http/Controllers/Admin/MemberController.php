@@ -7,6 +7,7 @@ use App\Response\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\MemberRepository;
+use App\Lib\Server\UpdateVipInfo;
 
 class MemberController extends Controller
 {
@@ -75,7 +76,21 @@ class MemberController extends Controller
      */
     public function show($id)
     {
-        //
+        $member = $this->member->GetOne($id);
+
+        $param = [
+            'm_id' => $member->m_id,
+            'userAccount' => $member->userAccount,
+        ];
+
+        try {
+            $response = (new UpdateVipInfo)->GetPlalformParam($param);
+            (new UpdateVipInfo)->UpdateVipToBy($response);
+        } catch (\Exception $e) {
+            return JsonResponse::JsonData(ApiErrDesc::CODE_ERR[0],$e->getMessage());
+        }
+
+        return JsonResponse::ResponseSuccess(['data'=>$response['vipName']]);
     }
 
     /**
@@ -118,6 +133,6 @@ class MemberController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }

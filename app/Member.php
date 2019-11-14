@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Vip;
 use Illuminate\Database\Eloquent\Model;
 
 class Member extends Model
@@ -27,5 +28,15 @@ class Member extends Model
     public function vip()
     {
         return $this->hasOne('App\Vip','vip_id','vip_id');
+    }
+
+    public function transformToVipId($vipName)
+    {
+        $vips = Vip::get(['vip_id','vipName']);
+        foreach ($vips as $k => $v) {
+            if($v->vipName == strtolower($vipName)){
+                return $v->vip_id;
+            }
+        }
     }
 }

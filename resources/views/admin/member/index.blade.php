@@ -70,7 +70,7 @@
                                     <a title="编辑"  onclick="xadmin.open('编辑','/admin/member/{{$v->m_id}}/edit',600,800,true)" href="javascript:;">
                                         <i class="layui-icon">&#xe642;</i>
                                     </a>
-                                    <a title="手动更新" onclick="member_del(this,'要删除的id')" href="javascript:;">
+                                    <a title="手动更新" onclick="update_vip(this,'{{$v->m_id}}')" href="javascript:;">
                                       <i class="layui-icon">&#xe9aa;</i>
                                     </a>
                                   </td>
@@ -129,11 +129,30 @@
 
 
   /*用户-删除*/
-  function member_del(obj,id){
-      layer.confirm('确认要删除吗？',function(index){
+  function update_vip(obj,id){
+      layer.confirm('确认要更新vip等级吗？',function(index){
           //发异步删除数据
-          $(obj).parents("tr").remove();
-          layer.msg('已删除!',{icon:1,time:1000});
+           $.ajax({
+              url:'/admin/member/'+id,
+              data:'',
+              dataType:'json',
+              type:'get',
+              headers:{
+                'X-CSRF-TOKEN':"{{csrf_token()}}"
+              },
+              success:function(res){
+                if(res.code == '1'){
+                    layer.msg(res.data.data+'更新ok!');
+                }
+                if(res.code == '422'){
+                    layer.msg(res.msg,{icon:5})
+                }
+                if(res.code == '0'){
+                    layer.msg(res.msg,{icon:5})
+                }
+              }
+            })
+         
       });
   }
 

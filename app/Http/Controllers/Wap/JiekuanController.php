@@ -13,6 +13,7 @@ use App\Repositories\MemberRepository;
 use App\Repositories\PandectRepository;
 use App\Repositories\BillRepository;
 use App\Lib\Server\RedisServer;
+use App\Lib\Server\UpdateVipInfo;
 
 class JiekuanController extends Controller
 {
@@ -146,16 +147,18 @@ class JiekuanController extends Controller
      */
     public function createMemberPandect($data)
     {
-        $res = (new Platfrom)->setParam($data)->FromPlatfromPull();  
+        // $res = (new Platfrom)->setParam($data)->FromPlatfromPull();  
 
-        // 平台无该用户 || 令牌过期
-        if($res['code'] == 100 || $res['code'] == 101){
-            throw new \Exception($res['msg']);
-        }
+        // // 平台无该用户 || 令牌过期
+        // if($res['code'] == 100 || $res['code'] == 101){
+        //     throw new \Exception($res['msg']);
+        // }
 
-        if($res['code'] == 200){
-            $this->response = $res['data'];
-        }
+        // if($res['code'] == 200){
+        //     $this->response = $res['data'];
+        // }
+        
+        $this->response = (new UpdateVipInfo)->GetPlalformParam($data);
 
         // 开启事务
         \DB::beginTransaction(); 

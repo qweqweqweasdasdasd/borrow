@@ -26,7 +26,7 @@ class RedisServer
 		$notPlatformKey = config('common.redis_keys.pre').config('common.redis_keys.jiekuan.pre').config('common.redis_keys.jiekuan.userAccountNotInPlatform');
 
         if(Redis::sismember($notPlatformKey,$username)){
-            throw new \Exception("{$username}非平台用户");
+            throw new \Exception("{$username}非平台用户,请不要重复提交!");
         };
 	}
 
