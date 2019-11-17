@@ -1,3 +1,3 @@
 <div class="footer">
-	Copyright © 澳门新葡京 Reserved
+	Copyright © {{$webset->web_name}} Reserved
 </div>

@@ -45,9 +45,11 @@ class JiekuanController extends Controller
     /**
      *	首页
      */
-    public function index()
+    public function index(Request $request)
     {
-    	return view('wap.jiekuan.index');
+        $route = $request->path();
+        $webset = \DB::table('webset')->first();
+    	return view('wap.jiekuan.index',compact('route','webset'));
     }
 
     /** 
@@ -96,7 +98,6 @@ class JiekuanController extends Controller
                 'status' => 1,
                 'p_id' => $this->pande->p_id, 
             ];
-
             // 详细账单
             $this->bill->store($d);
 

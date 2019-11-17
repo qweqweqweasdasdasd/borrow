@@ -30,6 +30,14 @@ class Member extends Model
         return $this->hasOne('App\Vip','vip_id','vip_id');
     }
 
+    /**
+     *  用户和总览表关系一对一
+     */
+    public function pandect()
+    {
+        return $this->hasOne('App\Pandect','m_id','m_id');
+    }
+
     public function transformToVipId($vipName)
     {
         $vips = Vip::get(['vip_id','vipName']);

@@ -2,6 +2,7 @@
 @section('content')
 <body>
 	@include('wap/common/header')
+	
 	@include('wap/common/nav')
 
 	<div class="content">
@@ -13,7 +14,7 @@
 				<p>
 				</p>
 				<p>
-					提交成功5分钟后请到<span style="color:#ff0000">“信用额度查询”</span>是否借款成功！若提示借款成功，请到澳门新葡京登入会员账号是否成功加入，如果没有成功加款到会员账号上，请联系借呗在线客服处理！
+					提交成功5分钟后请到<span style="color:#ff0000">“信用额度查询”</span>是否借款成功！若提示借款成功，请到 {{$webset->web_name}} 登入会员账号是否成功加入，如果没有成功加款到会员账号上，请联系借呗在线客服处理！
 				</p>
 				<p>
 				</p>
@@ -62,7 +63,7 @@
 		</div>
 	</div>
 
-	@include('wap/common/foot')
+	@include('wap/common/foot',['data'=>$webset])
 </body>
 @endsection
 @section('my-js')
@@ -110,7 +111,7 @@
 	})
 	laydate({
 		elem: '#hk_time',
-		min: laydate.now(+1), //-1代表昨天，-2代表前天，以此类推
+		min: laydate.now(+2), //-1代表昨天，-2代表前天，以此类推
 		max: laydate.now(+60),
 	});
 </script>

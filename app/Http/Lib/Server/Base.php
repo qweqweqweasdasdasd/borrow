@@ -7,6 +7,10 @@ namespace App\Lib\Server;
 class Base
 {
 	/**
+	 *	vip等级检测
+	 */
+	protected $offon = false;
+	/**
 	 *	提交数据核对数据库数据一致性
 	 */
 	public function Verify($member)
@@ -17,14 +21,16 @@ class Base
 		}
 
 		// 判断vip是否为当日更新数据
-		if( date('Y-m-d',strtotime($member->update_vip_time)) != date('Y-m-d',time())){
-			dd('pass');
-			$param = [
-	            'm_id' => $member->m_id,
-	            'userAccount' => $member->userAccount,
-	        ];
-			$response = (new UpdateVipInfo)->GetPlalformParam($param);
-            (new UpdateVipInfo)->UpdateVipToBy($response);
+		if($this->offon){
+			if( date('Y-m-d',strtotime($member->update_vip_time)) != date('Y-m-d',time())){
+				
+				$param = [
+		            'm_id' => $member->m_id,
+		            'userAccount' => $member->userAccount,
+		        ];
+				$response = (new UpdateVipInfo)->GetPlalformParam($param);
+	            (new UpdateVipInfo)->UpdateVipToBy($response);
+			}
 		}
 		
 		// 核对手机号

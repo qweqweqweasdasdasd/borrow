@@ -27,6 +27,19 @@ function common_show_status($status,$t1,$t2)
 }
 
 /**
+ *  显示-信用分类
+ */
+function show_credit_cate($cateId)
+{
+    switch ($cateId) {
+        case '1':
+            return '电子信用额度';
+        case '2';
+            return '真人信用额度';
+    }
+}
+
+/**
  *  账单状态
  *  1,待申请 2,借款成功 3,借款失败 4,待还款 5,还款成功 6,还款失败
  */

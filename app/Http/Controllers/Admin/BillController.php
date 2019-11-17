@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\ErrDesc\ApiErrDesc;
+use App\Response\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\BillRepository;
+use App\Lib\Server\Platfrom;
 
 class BillController extends Controller
 {
@@ -67,9 +70,33 @@ class BillController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request,$id)
     {
-        //
+        $bill = $this->bill->GetOne($id);
+
+        $data = [
+            'b_id' => $id,
+            'balance' => $request->get('money'),
+            'userAccount' => $bill->userAccount,
+        ];
+
+        $response = (new Platfrom)->Point($data);
+        
+        // 会话失效
+        if($response['code'] == 101){
+            return JsonResponse::JsonData(ApiErrDesc::CODE_ERR[0],$response['msg']);
+        }
+
+        // 上分成功
+        if($response['code'] == 200){
+            $d = [
+                'data' => $response['data'],
+            ];
+            return JsonResponse::ResponseSuccess($d);
+        }
+
+        // 不知原因失败
+        return JsonResponse::JsonData(ApiErrDesc::CODE_ERR[0],'不知原因失败!');
     }
 
     /**
@@ -80,7 +107,9 @@ class BillController extends Controller
      */
     public function edit($id)
     {
-        //
+        $bill = $this->bill->GetOne($id);
+
+        return view('admin.bill.edit',compact('bill'));
     }
 
     /**
@@ -92,7 +121,15 @@ class BillController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $id = $request->get('b_id');
+
+        $data = [
+            'desc' =>$request->get('desc')
+        ];
+        if(!$this->bill->CommonUpdate($id,$data)){
+            return JsonResponse::JsonData(ApiErrDesc::BILL_UPDATE_FAIL[0],ApiErrDesc::BILL_UPDATE_FAIL[1]);
+        };
+        return JsonResponse::ResponseSuccess();
     }
 
     /**

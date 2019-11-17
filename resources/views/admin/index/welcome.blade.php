@@ -12,7 +12,7 @@
                     </div>
                 </div>
             </div>
-            <div class="layui-col-md12">
+           <!--  <div class="layui-col-md12">
                 <div class="layui-card">
                     <div class="layui-card-header">数据统计</div>
                     <div class="layui-card-body ">
@@ -177,10 +177,10 @@
                         </table>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <style id="welcome_style"></style>
             <div class="layui-col-md12">
-                <blockquote class="layui-elem-quote layui-quote-nm">感谢layui,百度Echarts,jquery,本系统由x-admin提供技术支持。</blockquote></div>
+                <!-- <blockquote class="layui-elem-quote layui-quote-nm"></blockquote> --></div>
         </div>
     </div>
     </div>

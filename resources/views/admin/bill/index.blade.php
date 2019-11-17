@@ -22,11 +22,13 @@
                             	<div class="layui-input-inline layui-show-xs-block">
                                     <select name="status">
                                         <option value="">账单状态</option>
-                                        <option value="1" @if($whereData['status'] == 1) selected @endif>申请中</option>
-                                        <option value="2">已收货</option>
-                                        <option value="3">已取消</option>
-                                        <option value="4">已完成</option>
-                                        <option value="5">已作废</option></select>
+                                        <option value="1" @if($whereData['status'] == 1) selected @endif>待申请</option>
+                                        <option value="2" @if($whereData['status'] == 2) selected @endif>借款成功</option>
+                                        <option value="3" @if($whereData['status'] == 3) selected @endif>借款失败</option>
+                                        <option value="4" @if($whereData['status'] == 4) selected @endif>待还款</option>
+                                        <option value="5" @if($whereData['status'] == 5) selected @endif>还款成功</option>
+                                        <option value="6" @if($whereData['status'] == 6) selected @endif>还款失败</option>
+                                    </select>
                                 </div>
                                 <div class="layui-input-inline layui-show-xs-block">
                                     <input type="text" name="userAccount" placeholder="会员账号" autocomplete="off" class="layui-input" value="{{$whereData['userAccount']}}">
@@ -80,9 +82,10 @@
                                         <td>{!! bill_show_status($v->status) !!}</td>
                                         <td>{{$v->desc}}</td>
                                         <td class="td-manage">
-                                      
-                                            <a title="删除" onclick="member_del(this,'{$v->ba_id}')" href="javascript:;">
-                                                <i class="layui-icon">&#xe609;</i></a>
+                                            @if($v->status == 1)
+                                            <a title="申请借款" class="layui-btn layui-btn-xs" onclick="member_del(this,'{{$v->b_id}}')" href="javascript:;">申请借款</a>
+                                            @endif
+                                            <a title="备注" class="layui-btn layui-btn-normal layui-btn-xs" onclick="xadmin.open('编辑','/admin/bill/{{$v->b_id}}/edit',600,800,true)" href="javascript:;">备注</a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -129,23 +132,26 @@
 
     /*用户-删除*/
     function member_del(obj, id) {
-        layer.confirm('确认要删除吗？',function(index) {
+        layer.confirm('确认需要申请吗？',function(index) {
             //发异步删除数据
-
+            var money = $(obj).parents('tr').find('td:eq(6)').html();
+            
             $.ajax({
-                url:'/admin/borrowapply/'+id,
-                data:{status:status},
+                url:'/admin/bill/'+id,
+                data:{money:money},
                 dataType:'json',
-                type:'DELETE',
+                type:'get',
                 headers:{
                   'X-CSRF-TOKEN':"{csrf_token()}"
                 },  
                 success:function(res){
                     if(res.code == '1'){
-                        $(obj).parents("tr").remove();
-                        layer.msg('已删除!',{icon:1,time:1000});
+                        layer.msg(res.msg,{icon:6})
+                        setTimeout(function(){
+                            location.reload()
+                        },2000)
                     }
-                    if(res.code == '5000'){
+                    if(res.code == '0'){
                         layer.msg(res.msg,{icon:5})
                     }
                 }

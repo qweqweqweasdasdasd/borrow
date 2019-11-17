@@ -48,7 +48,7 @@ class VipRepository extends BaseRepository
             $list->whereBetween('created_at',[$d['start'],$d['end']] );
         }
 
-    	return $list->paginate(9);
+    	return $list->paginate(13);
     }
   	
 }

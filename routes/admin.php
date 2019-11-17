@@ -26,6 +26,12 @@ Route::group(['middleware'=>['auth:admin','FanQiang']],function(){
 	Route::resource('pandect','Admin\PandectController');				// 后台管理--总览管理
 
 	Route::resource('bill','Admin\BillController');						// 后台管理--账单管理
+
+	Route::resource('hkbill','Admin\HkbillController');					// 后台管理--还款管理
+
+	Route::resource('credit','Admin\CreditController');					// 后台管理--电子信用管理
+
+	Route::resource('webset','Admin\WebsetController');					// 后台管理--网站设置
 	
 	Route::post('upload','Admin\UploadController@upload');				// 后台管理--上传 excel || 
 });

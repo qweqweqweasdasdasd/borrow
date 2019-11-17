@@ -93,15 +93,15 @@ class KKbet
 	 */
 	public function addPoint($d)
 	{
-		if(empty($d['balance']) || empty($d['username'])){
+		if(empty($d['balance']) || empty($d['userAccount'])){
 			throw new \Exception("参数缺少!");
 		}
 
 		$data = [
 			'balance' => $d['balance'],
 			'damaMultiple' => $d['balance'],
-			'note' => "",					// 谁-参加了什么活动-金额是多少-操作者谁
-    		'userAccount' => $d['username'],
+			'note' => $d['note'],					// 谁-参加了什么活动-金额是多少-操作者谁
+    		'userAccount' => $d['userAccount'],
 		];
 
 		$opt = [
@@ -117,12 +117,14 @@ class KKbet
 
 		// status == 1 && msg == SUCCESS
 		if($content['status'] == 1 && $content['msg'] == 'SUCCESS'){
-			return "{$d['username']} 存款成功,金额: {$d['balance']}";
+			//return "{$d['username']} 存款成功,金额: {$d['balance']}";
+			return ['code'=>200,'msg'=>'success','data'=>$data];
 		}
 		
 		// 会话过期	status == 401
 		if($content['status'] == 401){
-			throw new \Exception("会话过期!");	
+			//throw new \Exception("会话过期!");	
+			return ['code'=>101,'msg'=>'系统令牌过期,请联系客服处理!'];
 		}
 	}
 
@@ -135,14 +137,14 @@ class KKbet
 	 */
 	public function subtractPoint($d)
 	{
-		if(empty($d['balance']) || empty($d['username'])){
+		if(empty($d['balance']) || empty($d['userAccount'])){
 			throw new \Exception("参数缺少!");
 		}
 
 		$data = [
 			'balance' => $d['balance'],
-			'note' => "",					// 谁-参加了什么活动-借款多少-自动扣除-操作者谁
-    		'userAccount' => $d['username'],
+			'note' => $d['note'],					// 谁-参加了什么活动-借款多少-自动扣除-操作者谁
+    		'userAccount' => $d['userAccount'],
 		];
 
 		$opt = [
@@ -153,17 +155,24 @@ class KKbet
 		];
 
 		$response = $this->ql->postJson($this->domain.'/adminsystem/server/memberManager/updateWithdraw',$data,$opt);
-
+		//dd($response);
 		$content = json_decode($response->getHtml(),true);
 		// status == 1 && msg == SUCCESS
 		if($content['status'] == 1 && $content['msg'] == 'SUCCESS'){
-			return "{$d['username']} 扣除成功,金额: {$d['balance']}";
+			return ['code'=>200,'msg'=>'success','data'=>$data];
 		}
 		
 		// 会话过期	status == 401
 		if($content['status'] == 401){
-			throw new \Exception("会话过期!");	
+			//throw new \Exception("会话过期!");	
+			return ['code'=>101,'msg'=>'系统令牌过期,请联系客服处理!'];	
 		}
+
+		// 扣款金额必须小于会员余额且至少剩余1元钱
+		if($content['status'] == -1){
+			return ['code'=>102,'msg'=>$content['msg']];
+		}
+		
 	}
 
 	/**

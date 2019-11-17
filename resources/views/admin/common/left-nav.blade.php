@@ -32,7 +32,7 @@
                             <cite>详情账单</cite></a>
                     </li>
                     <li>
-                        <a onclick="xadmin.add_tab('还款列表','order-list1.html')">
+                        <a onclick="xadmin.add_tab('还款列表','/admin/hkbill')">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>还款列表</cite></a>
                     </li>
@@ -56,9 +56,9 @@
                     </li>
                 </ul>
             </li>
-            <li>
+           <!--  <li>
                 <a href="javascript:;">
-                    <i class="layui-icon" lay-tips="栏目管理">&#xe638;</i>
+                    <i class="layui-icon" lay-tips="前台管理">&#xe638;</i>
                     <cite>栏目管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
@@ -68,7 +68,7 @@
                             <cite>多级分类</cite></a>
                     </li>
                 </ul>
-            </li>
+            </li> -->
              <li>
                 <a href="javascript:;">
                     <i class="layui-icon" lay-tips="令牌管理">&#xe631;</i>
@@ -166,9 +166,14 @@
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
                     <li>
-                        <a onclick="xadmin.add_tab('系统设置','unicode.html')">
+                        <a onclick="xadmin.add_tab('信用额度','/admin/credit')">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>系统设置</cite></a>
+                            <cite>信用额度</cite></a>
+                    </li>
+                    <li>
+                        <a onclick="xadmin.add_tab('网站设置','/admin/webset/1')">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>网站设置</cite></a>
                     </li>
                 </ul>
             </li>

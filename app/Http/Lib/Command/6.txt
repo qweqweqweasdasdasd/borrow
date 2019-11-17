@@ -1,0 +1,2 @@
+('{$v["userAccount"}','{$v["userName"]}','{$v["vipName"]}','{$v["apply_time"]}','{$v["repayment_time"]}','{$v["borrow_money"]}','{$v["status"]}','{$v["p_id"]}');
+                                                                                    

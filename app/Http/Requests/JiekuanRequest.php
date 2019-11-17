@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class JiekuanRequest extends FormRequest
 {
-     /**
+    /**
      *  验证的字段
      */
     protected $rules = [

@@ -6,10 +6,7 @@
 <div class="gao-gao">
 	<i>
 		<marquee style="height:45px;line-height:45px;font-size:18px;" scrollamount="5" direction="left">
-			后台可以修改,
-			后台可以修改,
-			后台可以修改,
-			后台可以修改,
+			{{$webset->desc}}
 		</marquee>
 	</i>
 </div>

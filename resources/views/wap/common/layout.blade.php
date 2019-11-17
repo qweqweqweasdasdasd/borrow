@@ -13,8 +13,10 @@
 		<title>澳门新葡京</title>
 		<link href="{{asset('/wap/css/reset.css')}}" rel="stylesheet">
 		<link href="{{asset('/wap/css/style.css')}}" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="{{asset('/wap/css/page.css')}}">
 		<script src="{{asset('/wap/js/jquery.min.js')}}"></script>
 		<script src="{{asset('/wap/js/layer.js')}}"></script>
+		
 		@yield('my-css')
 	</head>
 	@yield('content')

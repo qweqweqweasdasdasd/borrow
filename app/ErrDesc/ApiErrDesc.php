@@ -95,6 +95,26 @@ class ApiErrDesc
 	 *	用户管理
 	 */
 	const MEMBER_UPDATE_FAIL = ['8000','用户更新姓名失败!'];
+
+
+	/**
+	 *	信用管理
+	 */
+	const CREDIT_SAVE_FAIL = ['9000','信用管理保存失败!'];
+
+	const CREDIT_UPDATE_FAIL = ['9001','信用管理保存失败!'];
+
+	const CREDIT_DELTED_FAIL = ['9002','信用管理保存失败!'];
+
+	/**
+	 *	账单管理
+	 */
+	const BILL_UPDATE_FAIL = ['10000','账单编辑失败!'];
+
+	/**
+	 *	还款管理
+	 */
+	const HKBILL_UPDATE_FAIL = ['11000','还款账单编辑失败!'];
 	
 	
 }
